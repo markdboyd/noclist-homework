@@ -22,7 +22,7 @@ v15.14.0
 
 ### Install dependencies
 
-install the dependencies for the project:
+Install the dependencies for the project:
 
 ```shell
 npm install
