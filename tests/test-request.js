@@ -18,13 +18,13 @@ test.serial('makeRequestWithRetries() returns response from request with 200 sta
     .get('/foo')
     .reply(200, 'bar');
 
-  const response = await makeRequestWithRetries(
+  const { body } = await makeRequestWithRetries(
     {
       hostname: 'fake-api.com',
       path: '/foo',
     }
   );
-  t.is(response.body, 'bar');
+  t.is(body, 'bar');
 });
 
 test.serial('makeRequestWithRetries() retries failing request and throws error after allowed number of attempts', async (t) => {
