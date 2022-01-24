@@ -2,12 +2,8 @@ const crypto = require('crypto');
 
 const {
   makeRequestWithRetries,
+  getAuthToken,
 } = require('./request');
-
-async function getAuthToken(requestParams) {
-  const { headers } = await makeRequestWithRetries(requestParams);
-  return headers['Badsec-Authentication-Token'.toLowerCase()];
-}
 
 async function getUsers(requestParams, authToken) {
   requestParams.headers = requestParams.headers || {};

@@ -3,6 +3,7 @@ const test = require('ava');
 
 const {
   makeRequestWithRetries,
+  getAuthToken,
 } = require('../request');
 
 test.before(() => {
@@ -66,4 +67,18 @@ test.serial('makeRequestWithRetries() returns response from successful retry', a
     allowedRetries
   );
   t.is(body, 'success');
+});
+
+test.serial('getAuthToken() returns correct auth token', async (t) => {
+  const authToken = 'baz';
+  nock('http://fake-api.com')
+    .get('/token')
+    .reply(200, 'useless data', {
+      'badsec-authentication-token': authToken,
+    });
+  const returnedToken = await getAuthToken({
+    hostname: 'fake-api.com',
+    path: '/token',
+  });
+  t.is(returnedToken, authToken);
 });
