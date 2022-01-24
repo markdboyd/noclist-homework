@@ -1,16 +1,8 @@
-const crypto = require('crypto');
-
 const {
   makeRequestWithRetries,
   getAuthToken,
+  getUserIds,
 } = require('./request');
-
-async function getUsers(requestParams, authToken) {
-  requestParams.headers = requestParams.headers || {};
-  requestParams.headers['X-Request-Checksum'] = crypto.createHash('sha256').update(`${authToken}/users`).digest('hex');
-  const { body } = await makeRequestWithRetries(requestParams);
-  return body.split('\n');
-}
 
 async function runProgram() {
   const authToken = await getAuthToken({

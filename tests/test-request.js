@@ -1,9 +1,11 @@
+const crypto = require('crypto');
 const nock = require('nock');
 const test = require('ava');
 
 const {
   makeRequestWithRetries,
   getAuthToken,
+  getUserIds,
 } = require('../request');
 
 test.before(() => {
@@ -82,3 +84,22 @@ test.serial('getAuthToken() returns correct auth token', async (t) => {
   });
   t.is(returnedToken, authToken);
 });
+
+test.serial('getUserIds() returns expected user ids', async (t) => {
+  const authToken = 'token';
+  const expectedRequestChecksum = crypto.createHash('sha256').update(`${authToken}/users`).digest('hex');
+
+  nock('http://fake-api.com')
+    .matchHeader('X-Request-Checksum', expectedRequestChecksum)
+    .get('/users')
+    .reply(200, '1\n2');
+
+  const userIds = await getUserIds(
+    {
+      hostname: 'fake-api.com',
+      path: '/users'
+    },
+    authToken
+  );
+  t.deepEqual(userIds, ['1','2']);
+})
