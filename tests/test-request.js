@@ -74,7 +74,7 @@ test.serial('makeRequestWithRetries() returns response from successful retry', a
 test.serial('getAuthToken() returns correct auth token', async (t) => {
   const authToken = 'baz';
   nock('http://fake-api.com')
-    .get('/token')
+    .intercept('/token', 'HEAD')
     .reply(200, 'useless data', {
       'badsec-authentication-token': authToken,
     });

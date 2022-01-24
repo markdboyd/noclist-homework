@@ -8,7 +8,7 @@ async function runProgram() {
   const authToken = await getAuthToken({
     hostname: '0.0.0.0',
     port: 8888,
-    path: '/auth'
+    path: '/auth',
   });
   const users = await getUserIds(
     {

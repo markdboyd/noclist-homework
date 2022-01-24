@@ -40,6 +40,7 @@ async function makeRequestWithRetries(requestParams, allowedRetries = 3) {
 }
 
 async function getAuthToken(requestParams) {
+  requestParams.method = 'HEAD';
   const { headers } = await makeRequestWithRetries(requestParams);
   return headers['badsec-authentication-token'];
 }
