@@ -27,7 +27,7 @@ test.serial('makeRequestWithRetries() returns response from request with 200 sta
   t.is(body, 'bar');
 });
 
-test.serial('makeRequestWithRetries() retries failing request and throws error after allowed number of attempts', async (t) => {
+test.serial('makeRequestWithRetries() retries request with non-200 response and throws error after allowed number of attempts', async (t) => {
   const allowedRetries = 3;
   const scope = nock('http://fake-api.com')
     .get('/users')
@@ -45,4 +45,25 @@ test.serial('makeRequestWithRetries() retries failing request and throws error a
     { message: /unexpected statusCode 500/ }
   );
   t.true(scope.isDone());
+});
+
+test.serial('makeRequestWithRetries() returns response from successful retry', async (t) => {
+  const allowedRetries = 4;
+
+  nock('http://fake-api.com')
+    .get('/retrySuccess')
+    .times(allowedRetries - 1)
+    .reply(500);
+  nock('http://fake-api.com')
+    .get('/retrySuccess')
+    .reply(200, 'success');
+
+  const { body } = await makeRequestWithRetries(
+    {
+      hostname: 'fake-api.com',
+      path: '/retrySuccess',
+    },
+    allowedRetries
+  );
+  t.is(body, 'success');
 });
