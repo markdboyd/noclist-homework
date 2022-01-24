@@ -1,0 +1,15 @@
+{
+  "name": "noclist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "noclist.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ava": "^4.0.1",
+    "nock": "^13.2.2"
+  }
+}
