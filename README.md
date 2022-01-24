@@ -5,9 +5,9 @@
 - Node.js `v15.14.0`
 - Docker
 
-### Installing correct Node.js version
+### Using `nvm` to install correct Node.js version
 
-Install [Node.js](https://nodejs.org/en/) `v15.14.0`. If you have [NVM](https://github.com/nvm-sh/nvm) installed, you can run this command from the root of the repository to install the correct version:
+If you have [NVM](https://github.com/nvm-sh/nvm) installed, you can run this command from the root of the repository to install the correct version:
 
 ```shell
 nvm install
