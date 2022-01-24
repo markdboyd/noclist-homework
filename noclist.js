@@ -10,11 +10,14 @@ async function runProgram() {
     port: 8888,
     path: '/auth'
   });
-  const users = await getUsers({
-    hostname: '0.0.0.0',
-    port: 8888,
-    path: '/users',
-  }, authToken);
+  const users = await getUserIds(
+    {
+      hostname: '0.0.0.0',
+      port: 8888,
+      path: '/users',
+    },
+    authToken
+  );
   console.log(users);
 }
 
